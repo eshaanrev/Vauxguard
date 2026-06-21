@@ -5,7 +5,25 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ margin: 0 }}>{children}</body>
+      <head>
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
+      </head>
+      <body
+        style={{
+          margin: 0,
+          background: "#0a0a0a",
+          color: "#ededed",
+          fontFamily:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        }}
+      >
+        {children}
+      </body>
     </html>
   );
 }

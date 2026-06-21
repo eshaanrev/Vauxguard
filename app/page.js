@@ -1,64 +1,144 @@
 import Link from "next/link";
 
 export default function Home() {
+  const stats = [
+    { value: "< 2s", label: "Analysis time" },
+    { value: "100%", label: "Offline safe (Pi)" },
+    { value: "Free", label: "To get started" },
+  ];
+
   return (
     <div
       style={{
         minHeight: "100vh",
         background: "#0a0a0a",
-        color: "#fff",
-        fontFamily: "'Courier New', monospace",
+        color: "#ededed",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
         textAlign: "center",
         padding: "0 24px",
+        boxSizing: "border-box",
       }}
     >
-      <h1
-        style={{
-          fontSize: "48px",
-          letterSpacing: "16px",
-          margin: 0,
-          fontWeight: "bold",
-        }}
-      >
-        VAUXGUARD
-      </h1>
-      <p style={{ color: "#666", letterSpacing: "4px", marginTop: "16px" }}>
-        REAL VOICES ONLY.
-      </p>
-      <div style={{ display: "flex", gap: "16px", marginTop: "48px" }}>
-        <Link
-          href="/login"
+      <div style={{ width: "100%", maxWidth: "440px" }}>
+        <div
           style={{
-            background: "#fff",
-            color: "#0a0a0a",
-            padding: "14px 28px",
-            textDecoration: "none",
-            fontFamily: "'Courier New', monospace",
-            fontWeight: "bold",
-            letterSpacing: "2px",
+            fontSize: "0.7rem",
+            color: "#444",
+            letterSpacing: "0.15em",
+            marginBottom: "16px",
           }}
         >
-          GET STARTED
-        </Link>
-        <Link
-          href="/pricing"
+          VAUXGUARD
+        </div>
+        <h1
           style={{
-            background: "transparent",
-            color: "#fff",
-            padding: "14px 28px",
-            textDecoration: "none",
-            fontFamily: "'Courier New', monospace",
-            fontWeight: "bold",
-            letterSpacing: "2px",
-            border: "1px solid #222",
+            fontSize: "2.2rem",
+            color: "#ededed",
+            fontWeight: 600,
+            lineHeight: 1.3,
+            margin: "0 0 12px",
           }}
         >
-          PRICING
-        </Link>
+          Detect deepfake voices.
+        </h1>
+        <p
+          style={{
+            fontSize: "0.95rem",
+            color: "#888",
+            lineHeight: 1.6,
+            margin: "0 0 40px",
+          }}
+        >
+          Upload or record audio and get an instant AI verdict on whether the
+          voice is real or synthetic.
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            justifyContent: "center",
+          }}
+        >
+          <Link
+            href="/login"
+            style={{
+              background: "#ededed",
+              color: "#0a0a0a",
+              borderRadius: "6px",
+              padding: "10px 24px",
+              fontWeight: 500,
+              fontSize: "0.9rem",
+              border: "none",
+              textDecoration: "none",
+            }}
+          >
+            GET STARTED
+          </Link>
+          <Link
+            href="/pricing"
+            style={{
+              background: "transparent",
+              border: "1px solid #2a2a2a",
+              color: "#888",
+              borderRadius: "6px",
+              padding: "10px 24px",
+              fontWeight: 500,
+              fontSize: "0.9rem",
+              textDecoration: "none",
+            }}
+          >
+            PRICING
+          </Link>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "24px",
+            marginTop: "48px",
+          }}
+        >
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "24px",
+              }}
+            >
+              {i > 0 && (
+                <div
+                  style={{
+                    width: "1px",
+                    height: "32px",
+                    background: "#1c1c1c",
+                  }}
+                />
+              )}
+              <div>
+                <div
+                  style={{
+                    color: "#ededed",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  {stat.value}
+                </div>
+                <div style={{ color: "#444", fontSize: "0.72rem", marginTop: "4px" }}>
+                  {stat.label}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

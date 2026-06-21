@@ -3,127 +3,209 @@
 import Link from "next/link";
 
 export default function Pricing() {
-  const cardStyle = {
-    flex: 1,
-    minWidth: "260px",
-    background: "#111",
-    border: "1px solid #222",
-    padding: "32px",
-  };
+  const freeFeatures = [
+    "5 analyses per month",
+    "File upload",
+    "Mic recording",
+    "Verdict + confidence score",
+  ];
 
-  const featureStyle = {
-    color: "#aaa",
-    fontSize: "14px",
-    padding: "6px 0",
-    borderBottom: "1px solid #1a1a1a",
-  };
+  const premiumFeatures = [
+    "Unlimited analyses",
+    "File upload",
+    "Mic recording",
+    "Verdict + confidence score",
+    "Detailed acoustic reasoning",
+  ];
 
   return (
     <div
       style={{
         minHeight: "100vh",
         background: "#0a0a0a",
-        color: "#fff",
-        fontFamily: "'Courier New', monospace",
-        padding: "48px 24px",
+        color: "#ededed",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+      <div
+        style={{
+          maxWidth: "520px",
+          margin: "0 auto",
+          padding: "60px 24px",
+        }}
+      >
+        <Link
+          href="/dashboard"
+          style={{
+            color: "#444",
+            fontSize: "0.82rem",
+            cursor: "pointer",
+            marginBottom: "40px",
+            display: "inline-block",
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "#888")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "#444")}
+        >
+          ← Dashboard
+        </Link>
+
         <h1
           style={{
-            letterSpacing: "12px",
-            fontSize: "28px",
-            textAlign: "center",
-            margin: 0,
+            fontSize: "1.8rem",
+            color: "#ededed",
+            fontWeight: 600,
+            margin: "0 0 8px",
           }}
         >
-          VAUXGUARD
+          Simple pricing
         </h1>
         <p
           style={{
             color: "#666",
-            letterSpacing: "3px",
-            textAlign: "center",
-            marginTop: "8px",
+            fontSize: "0.95rem",
+            margin: "0 0 40px",
           }}
         >
-          REAL VOICES ONLY.
+          Start free, upgrade when you need more.
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "24px",
-            marginTop: "48px",
-            flexWrap: "wrap",
-          }}
-        >
-          <div style={cardStyle}>
-            <h2 style={{ margin: 0, letterSpacing: "4px" }}>FREE</h2>
-            <p style={{ fontSize: "28px", margin: "12px 0" }}>
-              $0
-              <span style={{ fontSize: "14px", color: "#666" }}> /forever</span>
-            </p>
-            <div style={{ marginTop: "20px" }}>
-              <div style={featureStyle}>5 analyses / month</div>
-              <div style={featureStyle}>File upload</div>
-              <div style={featureStyle}>Mic recording</div>
-              <div style={featureStyle}>Verdict + confidence</div>
-            </div>
-            <Link
-              href="/login"
-              style={{
-                display: "block",
-                textAlign: "center",
-                marginTop: "28px",
-                padding: "12px",
-                background: "#fff",
-                color: "#0a0a0a",
-                textDecoration: "none",
-                fontWeight: "bold",
-                letterSpacing: "2px",
-              }}
-            >
-              GET STARTED
-            </Link>
-          </div>
-
-          <div style={{ ...cardStyle, border: "1px solid #4caf50" }}>
-            <h2 style={{ margin: 0, letterSpacing: "4px", color: "#4caf50" }}>
-              PREMIUM
-            </h2>
-            <p style={{ fontSize: "28px", margin: "12px 0" }}>
-              $9.99
-              <span style={{ fontSize: "14px", color: "#666" }}> /month</span>
-            </p>
-            <div style={{ marginTop: "20px" }}>
-              <div style={featureStyle}>Unlimited analyses</div>
-              <div style={featureStyle}>File upload</div>
-              <div style={featureStyle}>Mic recording</div>
-              <div style={featureStyle}>Detailed reasoning</div>
-            </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          {/* Free card */}
+          <div
+            style={{
+              background: "#111",
+              border: "1px solid #1c1c1c",
+              borderRadius: "12px",
+              padding: "24px",
+            }}
+          >
             <div
               style={{
-                marginTop: "28px",
-                padding: "12px",
-                background: "#1a1a1a",
-                color: "#666",
-                textAlign: "center",
-                fontWeight: "bold",
-                letterSpacing: "2px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              COMING SOON
+              <span
+                style={{
+                  color: "#ededed",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                }}
+              >
+                Free
+              </span>
+              <span style={{ color: "#888", fontSize: "0.9rem" }}>
+                $0 / month
+              </span>
             </div>
+            <div
+              style={{ borderTop: "1px solid #1c1c1c", margin: "16px 0" }}
+            />
+            {freeFeatures.map((feature) => (
+              <div
+                key={feature}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <span style={{ color: "#444" }}>✓</span>
+                <span style={{ color: "#888", fontSize: "0.85rem" }}>
+                  {feature}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Premium card */}
+          <div
+            style={{
+              background: "#0d1a10",
+              border: "1px solid #1a3d24",
+              borderRadius: "12px",
+              padding: "24px",
+              position: "relative",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                top: "24px",
+                right: "24px",
+                color: "#3ecf8e",
+                fontSize: "0.65rem",
+                letterSpacing: "0.1em",
+                background: "#0a2a14",
+                border: "1px solid #1a4d2e",
+                borderRadius: "4px",
+                padding: "2px 8px",
+              }}
+            >
+              RECOMMENDED
+            </span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span
+                style={{
+                  color: "#ededed",
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                }}
+              >
+                Premium
+              </span>
+              <span style={{ color: "#888", fontSize: "0.9rem" }}>
+                $9.99 / month
+              </span>
+            </div>
+            <div
+              style={{ borderTop: "1px solid #1a3d24", margin: "16px 0" }}
+            />
+            {premiumFeatures.map((feature) => (
+              <div
+                key={feature}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <span style={{ color: "#3ecf8e" }}>✓</span>
+                <span style={{ color: "#aaa", fontSize: "0.85rem" }}>
+                  {feature}
+                </span>
+              </div>
+            ))}
+            <button
+              disabled
+              style={{
+                width: "100%",
+                marginTop: "20px",
+                background: "#3ecf8e",
+                color: "#0a0a0a",
+                border: "none",
+                borderRadius: "6px",
+                padding: "11px",
+                fontWeight: 500,
+                fontSize: "0.9rem",
+                cursor: "default",
+                opacity: 0.6,
+              }}
+            >
+              Coming soon
+            </button>
           </div>
         </div>
-
-        <p style={{ textAlign: "center", marginTop: "40px" }}>
-          <Link href="/dashboard" style={{ color: "#666" }}>
-            ← Back to dashboard
-          </Link>
-        </p>
       </div>
     </div>
   );

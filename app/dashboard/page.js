@@ -129,110 +129,217 @@ export default function Dashboard() {
         style={{
           minHeight: "100vh",
           background: "#0a0a0a",
-          color: "#666",
-          fontFamily: "'Courier New', monospace",
+          color: "#444",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          fontSize: "0.9rem",
         }}
       >
-        Loading...
+        Loading…
       </div>
     );
   }
 
   const isPremium = profile.tier === "premium";
   const atLimit = !isPremium && profile.analyses_used >= 5;
+  const used = profile.analyses_used;
+  const pct = Math.min((used / 5) * 100, 100);
+  const warnLevel = used >= 4;
+  const analyzeDisabled = !audio || loading || atLimit;
 
   return (
     <div
       style={{
         minHeight: "100vh",
         background: "#0a0a0a",
-        color: "#fff",
-        fontFamily: "'Courier New', monospace",
-        padding: "32px 24px",
+        color: "#ededed",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+      <div
+        style={{
+          maxWidth: "640px",
+          margin: "0 auto",
+          padding: "40px 24px",
+        }}
+      >
+        {/* Top nav bar */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "16px",
+            alignItems: "center",
+            marginBottom: "40px",
+            paddingBottom: "20px",
+            borderBottom: "1px solid #1c1c1c",
           }}
         >
-          <div>
-            <h1 style={{ letterSpacing: "8px", fontSize: "22px", margin: 0 }}>
-              VAUXGUARD
-            </h1>
-            <p style={{ color: "#666", fontSize: "13px", margin: "6px 0 0" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span
+              style={{ fontSize: "0.9rem", color: "#ededed", fontWeight: 600 }}
+            >
+              Vauxguard
+            </span>
+            <span style={{ color: "#333" }}>·</span>
+            <span style={{ fontSize: "0.85rem", color: "#555" }}>
               {user.email}
-            </p>
+            </span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             <span
               style={{
-                color: isPremium ? "#4caf50" : "#aaa",
-                fontSize: "13px",
-                border: "1px solid #222",
-                padding: "6px 10px",
+                background: isPremium ? "#0d2a1a" : "#1a1a1a",
+                border: `1px solid ${isPremium ? "#1a4d2e" : "#2a2a2a"}`,
+                color: isPremium ? "#3ecf8e" : "#666",
+                borderRadius: "20px",
+                padding: "3px 12px",
+                fontSize: "0.75rem",
               }}
             >
-              {isPremium
-                ? "PREMIUM"
-                : `FREE · ${profile.analyses_used}/5`}
+              {isPremium ? "Premium" : "Free plan"}
             </span>
             {!isPremium && (
               <Link
                 href="/pricing"
                 style={{
-                  color: "#4caf50",
-                  fontSize: "13px",
+                  background: "#3ecf8e",
+                  color: "#0a0a0a",
+                  borderRadius: "6px",
+                  padding: "5px 14px",
+                  fontSize: "0.78rem",
+                  fontWeight: 500,
+                  marginLeft: "8px",
                   textDecoration: "none",
-                  border: "1px solid #4caf50",
-                  padding: "6px 10px",
                 }}
               >
-                UPGRADE
+                Upgrade
               </Link>
             )}
             <button
               onClick={signOut}
               style={{
-                background: "transparent",
-                color: "#666",
-                border: "1px solid #222",
-                padding: "6px 10px",
-                fontFamily: "'Courier New', monospace",
+                background: "none",
+                border: "none",
+                color: "#444",
+                fontSize: "0.8rem",
                 cursor: "pointer",
-                fontSize: "13px",
+                marginLeft: "12px",
               }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#888")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#444")}
             >
-              OUT
+              Sign out
             </button>
           </div>
         </div>
 
+        {/* Usage card (free tier only) */}
+        {!isPremium && (
+          <div
+            style={{
+              background: "#111",
+              border: "1px solid #1c1c1c",
+              borderRadius: "8px",
+              padding: "16px 20px",
+              marginBottom: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <div style={{ fontSize: "0.82rem", color: "#888" }}>
+                Analyses this month
+              </div>
+              <div
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#ededed",
+                  fontWeight: 600,
+                  marginTop: "2px",
+                }}
+              >
+                {used}
+                <span style={{ color: "#444" }}>/5</span>
+              </div>
+            </div>
+            <div>
+              <div
+                style={{
+                  background: "#1c1c1c",
+                  borderRadius: "4px",
+                  height: "6px",
+                  width: "120px",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    background: warnLevel ? "#f59e0b" : "#3ecf8e",
+                    width: `${pct}%`,
+                    height: "100%",
+                    borderRadius: "4px",
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  fontSize: "0.7rem",
+                  color: "#444",
+                  marginTop: "4px",
+                  textAlign: "right",
+                }}
+              >
+                Resets monthly
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Main analysis card */}
         <div
           style={{
             background: "#111",
-            border: "1px solid #222",
+            border: "1px solid #1c1c1c",
+            borderRadius: "12px",
             padding: "28px",
-            marginTop: "32px",
           }}
         >
+          <div
+            style={{
+              fontSize: "0.68rem",
+              color: "#444",
+              letterSpacing: "0.12em",
+              marginBottom: "16px",
+            }}
+          >
+            AUDIO INPUT
+          </div>
+
+          {/* Upload zone */}
           <label
             style={{
               display: "block",
-              border: "1px dashed #333",
-              padding: "32px",
+              border: `2px dashed ${fileName ? "#1a4d2e" : "#1c1c1c"}`,
+              borderRadius: "8px",
+              padding: "32px 20px",
               textAlign: "center",
               cursor: "pointer",
-              color: fileName ? "#fff" : "#666",
+              transition: "border-color 0.15s",
+              background: fileName ? "#0a1a10" : "transparent",
+            }}
+            onMouseEnter={(e) => {
+              if (!fileName) {
+                e.currentTarget.style.borderColor = "#2a2a2a";
+                e.currentTarget.style.background = "#0f0f0f";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!fileName) {
+                e.currentTarget.style.borderColor = "#1c1c1c";
+                e.currentTarget.style.background = "transparent";
+              }
             }}
           >
             <input
@@ -241,117 +348,251 @@ export default function Dashboard() {
               onChange={handleFile}
               style={{ display: "none" }}
             />
-            {fileName || "Drop audio file or click to upload"}
+            <span
+              style={{
+                fontSize: "1.4rem",
+                color: "#333",
+                display: "block",
+                marginBottom: "8px",
+              }}
+            >
+              ↑
+            </span>
+            <div style={{ fontSize: "0.88rem", color: "#555" }}>
+              Drop audio file here
+            </div>
+            <div
+              style={{ fontSize: "0.75rem", color: "#333", marginTop: "4px" }}
+            >
+              MP3, WAV, M4A, OGG supported
+            </div>
+            {fileName && (
+              <div
+                style={{
+                  color: "#3ecf8e",
+                  fontSize: "0.82rem",
+                  marginTop: "8px",
+                }}
+              >
+                ✓ {fileName}
+              </div>
+            )}
           </label>
 
+          {/* Divider row */}
           <div
             style={{
-              textAlign: "center",
-              color: "#444",
-              margin: "16px 0",
-              letterSpacing: "2px",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              margin: "20px 0",
             }}
           >
-            or
+            <div style={{ flex: 1, height: "1px", background: "#1c1c1c" }} />
+            <span style={{ color: "#333", fontSize: "0.78rem" }}>or</span>
+            <div style={{ flex: 1, height: "1px", background: "#1c1c1c" }} />
           </div>
 
+          {/* Record button */}
           <button
             onClick={toggleRecord}
             style={{
               width: "100%",
-              padding: "14px",
-              background: recording ? "#f44336" : "transparent",
-              color: "#fff",
+              background: "#161616",
               border: `1px solid ${recording ? "#f44336" : "#222"}`,
-              fontFamily: "'Courier New', monospace",
-              letterSpacing: "2px",
+              borderRadius: "6px",
+              color: recording ? "#f44336" : "#666",
+              padding: "11px 16px",
+              fontSize: "0.88rem",
               cursor: "pointer",
             }}
           >
-            {recording ? "■ STOP RECORDING" : "● RECORD FROM MIC"}
+            {recording
+              ? "⏹  Stop recording  ·  recording in progress"
+              : "⏺  Record from microphone"}
           </button>
 
+          {/* Analyze button */}
           <button
             onClick={analyze}
-            disabled={!audio || loading || atLimit}
+            disabled={analyzeDisabled}
             style={{
               width: "100%",
-              padding: "16px",
               marginTop: "20px",
-              background: !audio || loading || atLimit ? "#1a1a1a" : "#fff",
-              color: !audio || loading || atLimit ? "#555" : "#0a0a0a",
-              border: "none",
-              fontFamily: "'Courier New', monospace",
-              fontWeight: "bold",
-              letterSpacing: "2px",
-              cursor: !audio || loading || atLimit ? "default" : "pointer",
+              padding: "13px",
+              borderRadius: "6px",
+              fontSize: "0.92rem",
+              fontWeight: 500,
+              background: loading
+                ? "#1a1a1a"
+                : analyzeDisabled
+                ? "#161616"
+                : "#ededed",
+              color: loading
+                ? "#555"
+                : analyzeDisabled
+                ? "#333"
+                : "#0a0a0a",
+              border:
+                !loading && analyzeDisabled ? "1px solid #1c1c1c" : "none",
+              cursor: analyzeDisabled ? "not-allowed" : "pointer",
             }}
           >
-            {loading ? "ANALYZING..." : "ANALYZE VOICE"}
+            {loading ? "Analyzing…" : "Analyze voice"}
           </button>
 
-          {loading && (
-            <p style={{ color: "#666", textAlign: "center", marginTop: "16px" }}>
-              Analyzing audio...
-            </p>
-          )}
-
+          {/* Limit reached state */}
           {atLimit && (
-            <p style={{ color: "#f44336", textAlign: "center", marginTop: "16px" }}>
-              Free limit reached.{" "}
-              <Link href="/pricing" style={{ color: "#f44336" }}>
-                Upgrade →
+            <div
+              style={{
+                background: "#1a0f00",
+                border: "1px solid #3d2200",
+                borderRadius: "8px",
+                padding: "14px 18px",
+                marginTop: "16px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span style={{ color: "#f59e0b", fontSize: "0.85rem" }}>
+                ⚠ Monthly limit reached
+              </span>
+              <Link
+                href="/pricing"
+                style={{
+                  color: "#ededed",
+                  fontSize: "0.85rem",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                }}
+              >
+                Upgrade to Premium →
               </Link>
-            </p>
+            </div>
           )}
 
+          {/* Error state */}
           {error && (
-            <p style={{ color: "#f44336", textAlign: "center", marginTop: "16px" }}>
-              {error}
-            </p>
+            <div
+              style={{
+                background: "#1a0a0a",
+                border: "1px solid #3d1a1a",
+                borderRadius: "8px",
+                padding: "14px 18px",
+                marginTop: "16px",
+                color: "#f44336",
+                fontSize: "0.82rem",
+              }}
+            >
+              ⚠ {error}
+            </div>
           )}
 
+          {/* Result section */}
           {result && (
             <div
               style={{
-                marginTop: "28px",
+                marginTop: "20px",
+                borderRadius: "12px",
                 padding: "24px",
-                background: "#0a0a0a",
-                border: "1px solid #222",
-                textAlign: "center",
+                animation: "fadeIn 0.3s ease",
+                background:
+                  result.verdict === "REAL" ? "#0a1a10" : "#1a0a0a",
+                border: `1px solid ${
+                  result.verdict === "REAL" ? "#1a3d24" : "#3d1a1a"
+                }`,
               }}
             >
               <div
                 style={{
-                  fontSize: "44px",
-                  fontWeight: "bold",
-                  letterSpacing: "6px",
-                  color: result.verdict === "REAL" ? "#4caf50" : "#f44336",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                {result.verdict}
-              </div>
-              <div style={{ color: "#aaa", marginTop: "8px" }}>
-                {result.confidence}% confidence
-              </div>
-              {result.reasoning ? (
-                <p
+                <div
                   style={{
-                    color: "#ccc",
-                    fontSize: "14px",
-                    marginTop: "20px",
-                    lineHeight: "1.6",
-                    textAlign: "left",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.05em",
+                    color: result.verdict === "REAL" ? "#3ecf8e" : "#f44336",
                   }}
                 >
-                  {result.reasoning}
-                </p>
+                  <span>●</span>
+                  {result.verdict === "REAL"
+                    ? "REAL VOICE"
+                    : "SYNTHETIC VOICE DETECTED"}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.82rem",
+                    color: result.verdict === "REAL" ? "#3ecf8e" : "#f44336",
+                    background:
+                      result.verdict === "REAL" ? "#0d2a1a" : "#2a0d0d",
+                    border: `1px solid ${
+                      result.verdict === "REAL" ? "#1a4d2e" : "#4d1a1a"
+                    }`,
+                    borderRadius: "20px",
+                    padding: "3px 12px",
+                  }}
+                >
+                  {result.confidence}% confidence
+                </div>
+              </div>
+
+              {result.reasoning ? (
+                <>
+                  <div
+                    style={{
+                      borderTop: `1px solid ${
+                        result.verdict === "REAL" ? "#1a3d24" : "#3d1a1a"
+                      }`,
+                      margin: "16px 0",
+                    }}
+                  />
+                  <p
+                    style={{
+                      color: "#888",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.7,
+                      margin: 0,
+                    }}
+                  >
+                    {result.reasoning}
+                  </p>
+                </>
               ) : (
-                <p style={{ color: "#666", fontSize: "13px", marginTop: "20px" }}>
-                  <Link href="/pricing" style={{ color: "#4caf50" }}>
-                    Upgrade to Premium for detailed reasoning
+                <div
+                  style={{
+                    background: "#161616",
+                    border: "1px solid #1c1c1c",
+                    borderRadius: "6px",
+                    padding: "12px 16px",
+                    marginTop: "16px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ color: "#555", fontSize: "0.8rem" }}>
+                    Detailed analysis available on Premium
+                  </span>
+                  <Link
+                    href="/pricing"
+                    style={{
+                      color: "#3ecf8e",
+                      fontSize: "0.8rem",
+                      cursor: "pointer",
+                      textDecoration: "none",
+                    }}
+                  >
+                    Upgrade →
                   </Link>
-                </p>
+                </div>
               )}
             </div>
           )}
