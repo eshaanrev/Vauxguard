@@ -13,7 +13,7 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 export const runtime = "nodejs";
 
 const HF_MODEL_URL =
-  "https://api-inference.huggingface.co/models/Gustking/wav2vec2-large-xlsr-deepfake-audio-classification";
+  "https://router.huggingface.co/models/Gustking/wav2vec2-large-xlsr-deepfake-audio-classification";
 
 export async function POST(request) {
   try {
