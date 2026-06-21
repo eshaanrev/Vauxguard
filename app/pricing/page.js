@@ -18,6 +18,17 @@ export default function Pricing() {
     "Detailed acoustic reasoning",
   ];
 
+  const enterpriseFeatures = [
+    "Unlimited analyses",
+    "File upload + mic recording",
+    "Dedicated wav2vec2 ML model (not LLM reasoning)",
+    "92-95% detection accuracy",
+    "Detailed acoustic forensics report",
+    "Priority API access",
+    "SLA guarantee",
+    "Custom integration support",
+  ];
+
   return (
     <div
       style={{
@@ -203,6 +214,108 @@ export default function Pricing() {
               }}
             >
               Coming soon
+            </button>
+          </div>
+
+          {/* Enterprise card */}
+          <div
+            style={{
+              background: "#0a0f1a",
+              border: "1px solid #1a2a4d",
+              borderTop: "2px solid #3b82f6",
+              borderRadius: "12px",
+              padding: "24px",
+              position: "relative",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                top: "24px",
+                right: "24px",
+                color: "#3b82f6",
+                fontSize: "0.65rem",
+                background: "#0a1628",
+                border: "1px solid #1a2a4d",
+                borderRadius: "4px",
+                padding: "2px 8px",
+              }}
+            >
+              MOST ACCURATE
+            </span>
+            <div
+              style={{
+                color: "#3b82f6",
+                fontSize: "0.65rem",
+                letterSpacing: "0.1em",
+              }}
+            >
+              ENTERPRISE
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: "8px",
+                marginTop: "8px",
+              }}
+            >
+              <span
+                style={{
+                  color: "#ededed",
+                  fontSize: "1.6rem",
+                  fontWeight: 600,
+                }}
+              >
+                Custom
+              </span>
+              <a
+                href="mailto:enterprise@vauxguard.com"
+                style={{
+                  color: "#3b82f6",
+                  fontSize: "0.7rem",
+                  textDecoration: "none",
+                }}
+              >
+                contact us
+              </a>
+            </div>
+            <div
+              style={{ borderTop: "1px solid #1a2a4d", margin: "16px 0" }}
+            />
+            {enterpriseFeatures.map((feature) => (
+              <div
+                key={feature}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <span style={{ color: "#3b82f6" }}>✓</span>
+                <span style={{ color: "#aaa", fontSize: "0.85rem" }}>
+                  {feature}
+                </span>
+              </div>
+            ))}
+            <button
+              disabled
+              style={{
+                width: "100%",
+                marginTop: "20px",
+                background: "#0a1628",
+                color: "#3b82f6",
+                border: "1px solid #1a2a4d",
+                borderRadius: "6px",
+                padding: "12px",
+                fontWeight: 500,
+                fontSize: "0.9rem",
+                cursor: "default",
+                opacity: 0.6,
+              }}
+            >
+              CONTACT SALES
             </button>
           </div>
         </div>
