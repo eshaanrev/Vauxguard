@@ -96,14 +96,37 @@ export async function POST(request) {
       await fs.rm(outputTempFile, { force: true });
     }
 
-    const hfResponse = await fetch(HF_MODEL_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
-        "Content-Type": "application/octet-stream",
-      },
-      body: wavBuffer,
-    });
+    const callHuggingFace = async () => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      try {
+        return await fetch(HF_MODEL_URL, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
+            "Content-Type": "application/octet-stream",
+          },
+          body: wavBuffer,
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
+    };
+
+    let hfResponse = await callHuggingFace();
+
+    // If the model is still loading (503), wait 10s and retry once.
+    if (hfResponse.status === 503) {
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+      hfResponse = await callHuggingFace();
+      if (hfResponse.status === 503) {
+        return NextResponse.json(
+          { error: "Model is warming up, please try again in 30 seconds" },
+          { status: 503 }
+        );
+      }
+    }
 
     if (!hfResponse.ok) {
       const errText = await hfResponse.text();
