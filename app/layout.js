@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
           background: "#0a0a0a",
           color: "#ededed",
           fontFamily:
-            "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            "'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace",
         }}
       >
         {children}
