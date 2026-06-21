@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  serverExternalPackages: ["ffmpeg-static"],
+  serverExternalPackages: ["node-wav", "ffmpeg-static"],
 };
 
 export default nextConfig;
