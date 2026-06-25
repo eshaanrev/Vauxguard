@@ -1,6 +1,6 @@
 # Vauxguard
 
-A web app that detects deepfake and AI-synthesized voices. Upload a voice clip and Vauxguard extracts a set of acoustic features from the raw audio, then runs them through an LLM acting as an audio-forensics analyst to return a verdict — **REAL** or **FAKE** — with a confidence score.
+A web app that detects deepfake and AI-synthesized voices. Upload a voice clip and Vauxguard extracts a set of acoustic features from the raw audio, then runs them through an LLM acting as an audio-forensics analyst to return a verdict with a confidence score.
 
 ## How it works
 
