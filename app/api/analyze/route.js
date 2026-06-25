@@ -276,10 +276,12 @@ Since no features could be extracted, return {"verdict":"REAL","confidence":50} 
     }
     const parsed = JSON.parse(jsonMatch[0]);
 
-    await supabase
-      .from("profiles")
-      .update({ analyses_used: profile.analyses_used + 1 })
-      .eq("id", user.id);
+    if (!isPremium) {
+      await supabase
+        .from("profiles")
+        .update({ analyses_used: profile.analyses_used + 1 })
+        .eq("id", user.id);
+    }
 
     const result = {
       verdict: parsed.verdict,
@@ -291,9 +293,7 @@ Since no features could be extracted, return {"verdict":"REAL","confidence":50} 
 
     return NextResponse.json(result);
   } catch (err) {
-    return NextResponse.json(
-      { error: err.message || "Analysis failed" },
-      { status: 500 }
-    );
+    console.error("Analysis failed:", err);
+    return NextResponse.json({ error: "Analysis failed" }, { status: 500 });
   }
 }

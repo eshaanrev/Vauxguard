@@ -1,5 +1,16 @@
 export const metadata = {
-  title: "Vauxguard",
+  title: {
+    default: "Vauxguard — Deepfake voice detection",
+    template: "%s · Vauxguard",
+  },
+  description:
+    "Upload or record audio and get an instant verdict on whether a voice is real or AI-synthesized, backed by acoustic feature analysis.",
+  openGraph: {
+    title: "Vauxguard — Deepfake voice detection",
+    description:
+      "Detect synthetic and deepfake voices from acoustic features, with a calibrated confidence score.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {
